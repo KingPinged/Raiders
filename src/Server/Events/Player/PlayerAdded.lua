@@ -8,16 +8,24 @@
 --Description: 
 --]]
 
-function playerAdded(self, player)
+type Self = {
+	Players: { [number]: any },
+	Modules: { [string]: any },
+	Packages: Folder,
+}
+function playerAdded(self: Self, player)
 	if self.Players[player.UserId] then
 		return
 	end
 
 	self.Players[player.UserId] = {}
+
+	self.Packages.
+
 	local data = self.Modules.Database:PlayerAdded(player)
 end
 
-return function(self)
+return function(self: Self)
 	local PlayerServe = game:GetService("Players")
 
 	PlayerServe.PlayerAdded:Connect(function(player)

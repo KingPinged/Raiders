@@ -12,10 +12,9 @@
 
 -- main server framework
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Packages = ReplicatedStorage.Packages
 
---wait for Packages to load then use dependency injection
-local Packages = ReplicatedStorage:WaitForChild("Packages")
 local ServerPackages = script.Parent:WaitForChild("ServerPackages")
 local Events = script.Parent:WaitForChild("Events")
 local Modules = script.Parent:WaitForChild("Modules")
@@ -26,6 +25,11 @@ local Modules = script.Parent:WaitForChild("Modules")
 local main = {}
 main.__index = main
 
+type ModuleType = {
+	init: () -> (),
+	-- Add other common fields here
+}
+
 function main.new()
 	local class = setmetatable({}, main)
 
@@ -35,8 +39,18 @@ function main.new()
 	-- load all packages
 	local h = {}
 	for _, package in ipairs(Packages:GetChildren()) do
-		h[package.Name] = require(package)
+local janitor = require(ReplicatedStorage.Packages.janitor)
+		local p = require(package)
+		Packages.h[package.Name] = require(package)
 	end
+
+	class.Packages = Packages 
+
+
+
+	janitor.
+	require(class.Packages.janitor)
+
 
 	-- load all server packages
 	local sh = {}
