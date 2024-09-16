@@ -35,30 +35,14 @@ function main.new()
 
 	--these init properties may need to be moved to a different module for organization
 	class.Players = {}
+	class.Packages = {}
 
-	-- load all packages
-	local h = {}
-	for _, package in ipairs(Packages:GetChildren()) do
-local janitor = require(ReplicatedStorage.Packages.janitor)
-		local p = require(package)
-		Packages.h[package.Name] = require(package)
-	end
-
-	class.Packages = Packages 
-
-
-
-	janitor.
-	require(class.Packages.janitor)
-
+	class.Packages.fusion = require(Packages.fusion)
+	class.Packages.janitor = require(Packages.janitor)
+	class.Packages.promise = require(Packages.promise)
 
 	-- load all server packages
-	local sh = {}
-	for _, package in ipairs(ServerPackages:GetChildren()) do
-		sh[package.Name] = require(package)
-	end
-
-	class.Packages = h
+	class.Packages.profileservice = require(ServerPackages.profileservice)
 
 	-- load all modules
 	local m = {}
@@ -70,7 +54,6 @@ local janitor = require(ReplicatedStorage.Packages.janitor)
 	end
 
 	class.Modules = m
-	class.ServerPackages = sh
 
 	-- must go after packages and modules because we use them
 	--load all events

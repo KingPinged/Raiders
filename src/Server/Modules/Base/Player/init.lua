@@ -1,17 +1,19 @@
-local Trap = {}
-Trap.__index = Trap
+local Player = {}
+Player.__index = Player
 
 local main = nil
 
-function Trap.new(data)
-	local class = setmetatable({}, Trap)
+function Player.new(data)
+	local class = setmetatable({}, Player)
 
-	--the original position will be used to reset the Trap when leaving room
+	--the original position will be used to reset the Player when leaving room
 	class.originalPosition = data.position
 	class.position = data.position
 	class.room = data.room
 	class.speed = 20
 	class.humanoid = data.humanoid
+
+    
 
 	class.Clean = main.Packages.janitor.new()
 
@@ -20,7 +22,7 @@ end
 
 --TODO differ between A star and just normal movement
 --TODO humanoid must be a real humanoid
-function Trap:MoveTo(pos)
+function Player:MoveTo(pos)
 	self.Clean:AddPromise(main.Packages.promise.new(function(resolve, reject, onCancel)
 		local targetReached = false
 
@@ -36,7 +38,7 @@ function Trap:MoveTo(pos)
 
 		main.Packages.promise.new(function(resolve, reject, onCancel)
 			while not targetReached do
-				--TODO update the tile of Trap in room
+				--TODO update the tile of Player in room
 
 				--TODO if the path is blocked
 
@@ -47,9 +49,9 @@ function Trap:MoveTo(pos)
 	end))
 end
 
-function Trap:Update() end
+function Player:Update() end
 
 return function(this)
 	main = this
-	return Trap
+	return Player
 end

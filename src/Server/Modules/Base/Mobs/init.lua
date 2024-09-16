@@ -14,6 +14,7 @@ function Mob.new(data)
 	class.humanoid = data.humanoid
 
 	class.Clean = main.Packages.janitor.new()
+
 	return class
 end
 
